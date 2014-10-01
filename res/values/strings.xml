@@ -33,6 +33,8 @@
     <string name="double_tap_sleep_sum">Double tap on statusbar to sleep device</string>
     <string name="long_press_kill">Long Press back to kill Application</string>
     <string name="long_press_kill_sum">Kill foreground application by holding back key</string>
+    <string name="blur_lockscreen">Lockscreen Blur</string>
+    <string name="blur_lockscreen_sum">Show Blurred background image on lockscreen</string>
     <string name="info">Note</string>
     <string name="info_sum">Changes will take effect only after reboot</string>
 

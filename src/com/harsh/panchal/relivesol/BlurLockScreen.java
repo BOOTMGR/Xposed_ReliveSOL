@@ -13,23 +13,28 @@ import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 @SuppressLint("SdCardPath")
 public class BlurLockScreen implements IXposedHookLoadPackage {
+	
+	XSharedPreferences pref = new XSharedPreferences("com.harsh.panchal.relivesol");
 
 	@Override
 	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
 		if(!lpparam.packageName.equals("com.lge.lockscreen"))
+			return;
+		if(!pref.getBoolean("blur_lockscreen", false))
 			return;
 		
 		Class<?> classz = XposedHelpers.findClass("com.lge.lockscreen.LgePatternUnlockScreen", lpparam.classLoader);
 		XposedBridge.hookAllConstructors(classz, new XC_MethodHook() {
 			@SuppressWarnings("deprecation")
 			@Override
-			protected void beforeHookedMethod(MethodHookParam param)
+			protected void beforeHookedMethod(final MethodHookParam param)
 					throws Throwable {
 				Bitmap map = takeSurfaceScreenshot();
 				if(map != null) {

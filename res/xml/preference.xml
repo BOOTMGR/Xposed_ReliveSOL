@@ -81,6 +81,11 @@
                 android:title="@string/rotate_lockscreen"
                 android:summary="@string/rotate_lockscreen_sum" />
 	    
+	    <CheckBoxPreference
+                android:key="blur_lockscreen"
+                android:title="@string/blur_lockscreen"
+                android:summary="@string/blur_lockscreen_sum" />
+	    
     </PreferenceScreen>
     
     <PreferenceScreen 
