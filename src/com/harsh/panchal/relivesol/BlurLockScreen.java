@@ -30,11 +30,10 @@ public class BlurLockScreen implements IXposedHookLoadPackage {
 		if(!pref.getBoolean("blur_lockscreen", false))
 			return;
 		
-		Class<?> classz = XposedHelpers.findClass("com.lge.lockscreen.LgePatternUnlockScreen", lpparam.classLoader);
-		XposedBridge.hookAllConstructors(classz, new XC_MethodHook() {
+		XC_MethodHook handleLockscreenConst = new XC_MethodHook() {
 			@SuppressWarnings("deprecation")
 			@Override
-			protected void beforeHookedMethod(final MethodHookParam param)
+			protected void beforeHookedMethod(MethodHookParam param)
 					throws Throwable {
 				Bitmap map = takeSurfaceScreenshot();
 				if(map != null) {
@@ -44,7 +43,14 @@ public class BlurLockScreen implements IXposedHookLoadPackage {
 				    XposedHelpers.callMethod(param.thisObject, "setBackgroundDrawable", drawable);
 				} else XposedBridge.log("[harsh_debug] takeSurfaceScreenshot() returned null");
 			}
-		});
+		};
+		
+		Class<?> patternUnlockScreen = XposedHelpers.findClass("com.lge.lockscreen.LgePatternUnlockScreen", lpparam.classLoader);
+		Class<?> passwordUnlockScreen = XposedHelpers.findClass("com.lge.lockscreen.LgePasswordUnlockScreen", lpparam.classLoader);
+		Class<?> simpleUnlockScreen = XposedHelpers.findClass("com.lge.lockscreen.LgeLockScreen", lpparam.classLoader);
+		XposedBridge.hookAllConstructors(patternUnlockScreen, handleLockscreenConst);	// pattern unlock screen
+		XposedBridge.hookAllConstructors(passwordUnlockScreen, handleLockscreenConst);	// password, PIN unlock screen
+		XposedBridge.hookAllConstructors(simpleUnlockScreen, handleLockscreenConst);	// default lge swipe unlock screen
 	}
 
 	public static Bitmap takeSurfaceScreenshot() {
