@@ -89,6 +89,13 @@ public class MainActivity extends Activity {
         @Override
         public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
         		Preference preference) {
+        	if(preference.getKey().equals("blur_lockscreen") && getPreferenceManager().getSharedPreferences().getBoolean("blur_lockscreen", false)) {
+        		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setTitle("Warning");
+				builder.setMessage("Blur lockscreen involves CPU intensive tasks which may cause some delay while locking device.");
+				builder.setPositiveButton("OK", null);
+				builder.create().show();
+        	}
         	return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
 	}
