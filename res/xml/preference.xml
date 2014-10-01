@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+	<PreferenceScreen
+                android:key="disp_preference_screen"
+                android:title="@string/disp_settings"
+                android:summary="@string/disp_settings_sum">
+            
+        <CheckBoxPreference
+                android:key="crt_off_anim"
+                android:title="@string/crt_off_anim"
+                android:summary="@string/crt_off_anim_sum" />
+ 
+    </PreferenceScreen>
+    
+	<PreferenceScreen
+                android:key="statusbar_preference_screen"
+                android:title="@string/statusbar_settings"
+                android:summary="@string/statusbar_settings_sum">
+        
+	    <CheckBoxPreference
+                android:key="ime_chooser"
+                android:title="@string/ime_chooser"
+                android:summary="@string/ime_chooser_sum" />
+	    
+	    <CheckBoxPreference
+                android:key="double_tap_sleep"
+                android:title="@string/double_tap_sleep"
+                android:summary="@string/double_tap_sleep_sum" />
+	    
+    </PreferenceScreen>
+    
+	<PreferenceScreen
+                android:key="misc_preference_screen"
+                android:title="@string/misc_settings"
+                android:summary="@string/misc_settings_sum">
+        
+	    <CheckBoxPreference
+                android:key="dual_panel"
+                android:title="@string/dual_pane"
+                android:summary="@string/dual_pane_sum" />
+	    
+	    <CheckBoxPreference
+                android:key="long_press_kill"
+                android:title="@string/long_press_kill"
+                android:summary="@string/long_press_kill_sum" />
+	    
+	    <CheckBoxPreference
+                android:key="vol_control_music"
+                android:title="@string/vol_control_music"
+                android:summary="@string/vol_control_music_sum" />
+	    
+	    <CheckBoxPreference
+                android:key="perf_mode"
+                android:title="@string/performance_mode"
+                android:summary="@string/performance_mode_sum" />
+	    
+	    <CheckBoxPreference
+                android:key="unplug_wake"
+                android:title="@string/unplug_wake"
+                android:summary="@string/unplug_wake_sum" />
+	    
+	    <CheckBoxPreference
+                android:key="all_rotation"
+                android:title="@string/all_rotation"
+                android:summary="@string/all_rotation_sum" />
+	    
+	    <CheckBoxPreference
+                android:key="navigation_bar"
+                android:title="@string/navigation_bar"
+                android:summary="@string/navigation_bar_sum" />
+	    
+    </PreferenceScreen>
+    
+	<PreferenceScreen 
+        		android:key="lockscreen_settings_screen"
+        		android:title="@string/lockscreen_settings"
+        		android:summary="@string/lockscreen_settings_sum">
+	    
+	    <CheckBoxPreference
+                android:key="rotate_lockscreen"
+                android:title="@string/rotate_lockscreen"
+                android:summary="@string/rotate_lockscreen_sum" />
+	    
+    </PreferenceScreen>
+    
+    <PreferenceScreen 
+        		android:key="dummy"
+        		android:title="@string/info"
+        		android:summary="@string/info_sum">
+    </PreferenceScreen>
+</PreferenceScreen>

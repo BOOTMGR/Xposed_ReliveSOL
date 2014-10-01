@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ReliveSOL</string>
+    <string name="hotboot">Hotboot</string>
+    <string name="disp_settings">Display Settings</string>
+    <string name="disp_settings_sum">Common display settings</string>
+    <string name="statusbar_settings">Statusbar Settings</string>
+    <string name="statusbar_settings_sum">Manage statusbar tweaks</string>
+    <string name="lockscreen_settings">Lockscreen Settings</string>
+    <string name="lockscreen_settings_sum">Manage lockscreen tweaks</string>
+    <string name="crt_off_anim">CRT off Animation</string>
+    <string name="crt_off_anim_sum">Display CRT off effect when turning off screen</string>
+    <string name="ime_chooser">Show IME chooser</string>
+    <string name="ime_chooser_sum">Show IME selector notification in statusbar</string>
+    <string name="misc_settings">Misc Settings</string>
+    <string name="misc_settings_sum">Miscellaneous settings can\'t be grouped into other categories</string>
+    <string name="dual_pane">Dual Panel Settings</string>
+    <string name="dual_pane_sum">Show tablet layout in settings</string>
+    <string name="performance_mode">Performance Mode [EXPERIMENTAL]</string>
+    <string name="unplug_wake">Wake on unplug</string>
+    <string name="unplug_wake_sum">Turn on screen when disconnected from charger, USB etc.</string>
+    <string name="all_rotation">Rotation in all directions</string>
+    <string name="all_rotation_sum">Allows 360 degree rotation</string>
+    <string name="vol_control_music">Control Music by Volume Keys</string>
+    <string name="vol_control_music_sum">Hold VolUP/VolDown for changing songs when screen is off</string>
+    <string name="navigation_bar">Show Navigationbar</string>
+    <string name="navigation_bar_sum">Display on screen home, recent, menu buttons</string>
+    <string name="performance_mode_sum">Various tweaks to improve performance</string>
+    <string name="rotate_lockscreen">Allow Rotation in Lockscreen</string>
+    <string name="rotate_lockscreen_sum">Lockscreen also rotates when auto rotation is enabled</string>
+    <string name="double_tap_sleep">Double Tap to sleep</string>
+    <string name="double_tap_sleep_sum">Double tap on statusbar to sleep device</string>
+    <string name="long_press_kill">Long Press back to kill Application</string>
+    <string name="long_press_kill_sum">Kill foreground application by holding back key</string>
+    <string name="info">Note</string>
+    <string name="info_sum">Changes will take effect only after reboot</string>
+
+</resources>
