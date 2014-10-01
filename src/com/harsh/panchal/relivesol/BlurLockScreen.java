@@ -37,7 +37,7 @@ public class BlurLockScreen implements IXposedHookLoadPackage {
 					throws Throwable {
 				Bitmap map = takeSurfaceScreenshot();
 				if(map != null) {
-				    Bitmap output = fastblur(map, 15);
+				    Bitmap output = fastblur(map, 30);
 				    BitmapDrawable drawable = new BitmapDrawable(output);
 				    map.recycle();
 				    XposedHelpers.callMethod(param.thisObject, "setBackgroundDrawable", drawable);
