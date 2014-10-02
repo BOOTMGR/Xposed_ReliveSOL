@@ -7,6 +7,7 @@
  ******************************************************************************/
 package com.harsh.panchal.relivesol;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
@@ -17,10 +18,11 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
+@SuppressLint("SdCardPath")
 public class BlurLockScreen implements IXposedHookLoadPackage {
 	
 	static {
-		System.loadLibrary("harsh");
+		System.load("/data/data/com.harsh.panchal.relivesol/lib/libharsh.so");
 	}
 	
 	XSharedPreferences pref = new XSharedPreferences("com.harsh.panchal.relivesol");
