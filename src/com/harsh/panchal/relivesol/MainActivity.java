@@ -16,6 +16,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -73,6 +74,9 @@ public class MainActivity extends Activity {
 					builder.setNegativeButton("No", null);
 					builder.create().show();
 					return true;
+			case R.id.about:
+				startActivity(new Intent(this, About.class));
+				return true;
 			default:
 	            return super.onOptionsItemSelected(item);
 		}

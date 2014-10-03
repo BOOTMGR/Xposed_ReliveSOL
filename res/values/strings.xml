@@ -3,6 +3,12 @@
 
     <string name="app_name">ReliveSOL</string>
     <string name="hotboot">Hotboot</string>
+    <string name="about">About</string>
+    <string name="title_1">ReliveSOL</string>
+    <string name="title_2">powered by Xposed Framework</string>
+    <string name="version">0.21</string>
+    <string name="dev_info">Harsh Panchal (BOOTMGR@xda-develoers.com)</string>
+    <string name="developer">Developer:</string>
     <string name="disp_settings">Display Settings</string>
     <string name="disp_settings_sum">Common display settings</string>
     <string name="statusbar_settings">Statusbar Settings</string>
