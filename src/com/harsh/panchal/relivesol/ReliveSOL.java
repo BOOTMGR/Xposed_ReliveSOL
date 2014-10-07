@@ -41,7 +41,7 @@ public class ReliveSOL implements IXposedHookZygoteInit, IXposedHookLoadPackage 
 	@Override
 	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
 		if(lpparam.packageName.equals("com.lge.lockscreen") && mPref.getBoolean("blur_lockscreen", false))
-			BlurLockScreen.init(lpparam.classLoader);
+			BlurLockScreen.init(lpparam.classLoader, Integer.parseInt(mPref.getString("blur_radius", "35")));
 		else if(lpparam.packageName.equals("com.android.systemui") && mPref.getBoolean("double_tap_sleep", false))
 			DoubleTapToSleep.init(lpparam.classLoader);
 		else if(lpparam.packageName.equals("android")) {

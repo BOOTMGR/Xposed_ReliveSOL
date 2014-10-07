@@ -20,7 +20,7 @@ public class BlurLockScreen {
 	
 	private native static void blurImage(Bitmap in, Bitmap out, int radius);
 	
-	public static void init(ClassLoader loader) {
+	public static void init(ClassLoader loader, final int radius) {
 		XC_MethodHook handleLockscreenConst = new XC_MethodHook() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -29,7 +29,7 @@ public class BlurLockScreen {
 				Bitmap map = takeSurfaceScreenshot();
 				if(map != null) {
 					Bitmap out = map.copy(Bitmap.Config.ARGB_8888, true);
-					blurImage(map, out, 35);
+					blurImage(map, out, radius);
 				    BitmapDrawable drawable = new BitmapDrawable(out);
 				    map.recycle();
 				    XposedHelpers.callMethod(param.thisObject, "setBackgroundDrawable", drawable);
