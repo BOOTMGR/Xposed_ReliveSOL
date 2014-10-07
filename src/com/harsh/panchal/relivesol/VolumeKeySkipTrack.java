@@ -13,28 +13,19 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 /**
  * Original Patch: https://github.com/CyanogenMod/android_frameworks_base/commit/fa0c6a58a44fd884d758d47eaa750c9c6476af1a
  * Reference: https://github.com/rovo89/XposedMods/blob/master/XposedTweakbox/src/de/robv/android/xposed/mods/tweakbox/VolumeKeysSkipTrack.java
  */
-public class VolumeKeySkipTrack implements IXposedHookLoadPackage {
-	private boolean mIsLongPress = false;
-	XSharedPreferences pref = new XSharedPreferences("com.harsh.panchal.relivesol");
+public class VolumeKeySkipTrack {
+	private static boolean mIsLongPress = false;
 
-	@Override
-	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
-		if(!lpparam.packageName.equals("android"))
-			return;
-		if(!pref.getBoolean("vol_control_music", false))
-			return;
-		Class<?> phwmPolicy = XposedHelpers.findClass("com.android.internal.policy.impl.PhoneWindowManager", lpparam.classLoader);
+	public static void init(ClassLoader loader) {
+		Class<?> phwmPolicy = XposedHelpers.findClass("com.android.internal.policy.impl.PhoneWindowManager", loader);
 		XposedBridge.hookAllConstructors(phwmPolicy, new XC_MethodHook() {
 			@Override
 			protected void afterHookedMethod(final MethodHookParam param)
@@ -89,9 +80,9 @@ public class VolumeKeySkipTrack implements IXposedHookLoadPackage {
 				}
 			}
 		});
-	}	
+	}
 
-    private void sendMediaButtonEvent(Object phwminstance, int code) {
+    private static void sendMediaButtonEvent(Object phwminstance, int code) {
     	Context mContext = (Context) XposedHelpers.getObjectField(phwminstance, "mContext");
         long eventtime = SystemClock.uptimeMillis();
         Intent keyIntent = new Intent(Intent.ACTION_MEDIA_BUTTON, null);
@@ -103,7 +94,7 @@ public class VolumeKeySkipTrack implements IXposedHookLoadPackage {
         mContext.sendOrderedBroadcast(keyIntent, null);
     }
 
-    void handleVolumeLongPress(Object phwminstance, int keycode) {
+    static void handleVolumeLongPress(Object phwminstance, int keycode) {
     	Handler mHandler = (Handler) XposedHelpers.getObjectField(phwminstance, "mHandler");
     	Runnable mVolumeUpLongPress = (Runnable) XposedHelpers.getAdditionalInstanceField(phwminstance, "mVolumeUpLongPress");
 		Runnable mVolumeDownLongPress = (Runnable) XposedHelpers.getAdditionalInstanceField(phwminstance, "mVolumeDownLongPress");
@@ -111,7 +102,7 @@ public class VolumeKeySkipTrack implements IXposedHookLoadPackage {
             mVolumeDownLongPress, ViewConfiguration.getLongPressTimeout());
     }
 
-    void handleVolumeLongPressAbort(Object phwminstance) {
+    static void handleVolumeLongPressAbort(Object phwminstance) {
     	Handler mHandler = (Handler) XposedHelpers.getObjectField(phwminstance, "mHandler");
     	Runnable mVolumeUpLongPress = (Runnable) XposedHelpers.getAdditionalInstanceField(phwminstance, "mVolumeUpLongPress");
 		Runnable mVolumeDownLongPress = (Runnable) XposedHelpers.getAdditionalInstanceField(phwminstance, "mVolumeDownLongPress");

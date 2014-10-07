@@ -11,29 +11,20 @@ import android.content.Context;
 import android.os.PowerManager;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 /**
  * Original Patch: http://review.cyanogenmod.org/#/c/55645/1/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBarView.java
  *
  */
-public class DoubleTapToSleep implements IXposedHookLoadPackage {
+public class DoubleTapToSleep {
 	
-	XSharedPreferences pref = new XSharedPreferences("com.harsh.panchal.relivesol");
+	private DoubleTapToSleep() {}
 	
-	@Override
-	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
-		if(!lpparam.packageName.equals("com.android.systemui"))
-			return;
-		if(!pref.getBoolean("double_tap_sleep", false))
-			return;
-		
-		final Class<?> statusbarView = XposedHelpers.findClass("com.android.systemui.statusbar.phone.PhoneStatusBarView", lpparam.classLoader);
+	public static void init(ClassLoader loader) {
+		final Class<?> statusbarView = XposedHelpers.findClass("com.android.systemui.statusbar.phone.PhoneStatusBarView", loader);
 		// Inject our fields
 		XposedBridge.hookAllConstructors(statusbarView, new XC_MethodHook() {
 			@Override

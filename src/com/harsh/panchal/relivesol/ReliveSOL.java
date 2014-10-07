@@ -7,13 +7,21 @@
  ******************************************************************************/
 package com.harsh.panchal.relivesol;
 
+import android.annotation.SuppressLint;
 import android.content.res.XResources;
+import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class ZygoteHook implements IXposedHookZygoteInit {
-	private XSharedPreferences mPref = null;
-
+@SuppressLint("SdCardPath")
+public class ReliveSOL implements IXposedHookZygoteInit, IXposedHookLoadPackage {
+	
+	private static XSharedPreferences mPref;
+	static {
+		System.load("/data/data/com.harsh.panchal.relivesol/lib/libharsh.so");
+	}
+	
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		mPref = new XSharedPreferences("com.harsh.panchal.relivesol");
@@ -28,7 +36,19 @@ public class ZygoteHook implements IXposedHookZygoteInit {
 			XResources.setSystemWideReplacement("android", "bool", "config_sf_limitedAlpha", true);
 			XResources.setSystemWideReplacement("android", "bool", "config_sf_slowBlur", true);
 		}
-		mPref = null;
 	}
 
+	@Override
+	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
+		if(lpparam.packageName.equals("com.lge.lockscreen") && mPref.getBoolean("blur_lockscreen", false))
+			BlurLockScreen.init(lpparam.classLoader);
+		else if(lpparam.packageName.equals("com.android.systemui") && mPref.getBoolean("double_tap_sleep", false))
+			DoubleTapToSleep.init(lpparam.classLoader);
+		else if(lpparam.packageName.equals("android")) {
+			if(mPref.getBoolean("long_press_kill", false))
+				LongPressBackToKill.init(lpparam.classLoader);
+			if(mPref.getBoolean("vol_control_music", false))
+				VolumeKeySkipTrack.init(lpparam.classLoader);
+		}
+	}
 }

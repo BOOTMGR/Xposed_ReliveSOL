@@ -20,42 +20,14 @@ import android.os.Process;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class LongPressBackToKill implements IXposedHookLoadPackage {
+public class LongPressBackToKill {
 	
-	private Object phwmInstance = null;
-	XSharedPreferences pref = new XSharedPreferences("com.harsh.panchal.relivesol");
-
-	@Override
-	public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
-		if(!lpparam.packageName.equals("android"))
-			return;
-		if(!pref.getBoolean("long_press_kill", false))
-			return;
-		Class<?> phwmPolicy = XposedHelpers.findClass("com.android.internal.policy.impl.PhoneWindowManager", lpparam.classLoader);
-		XposedHelpers.findAndHookMethod(phwmPolicy, "interceptKeyBeforeQueueing", KeyEvent.class, int.class, boolean.class, new XC_MethodHook() {
-			@Override
-			protected void beforeHookedMethod(MethodHookParam param)
-					throws Throwable {
-				phwmInstance = param.thisObject;
-				Handler handler = (Handler) XposedHelpers.getObjectField(param.thisObject, "mHandler");
-				KeyEvent event = (KeyEvent)param.args[0];
-				int code = event.getKeyCode();
-				if(code == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
-					handler.postDelayed(runnable, ViewConfiguration.getLongPressTimeout());
-				else
-					handler.removeCallbacks(runnable);
-			}
-		});
-	}
-	
-	Runnable runnable = new Runnable() {
+	private static Object phwmInstance = null;
+	private static Runnable runnable = new Runnable() {
 		
 		@Override
 		public void run() {
@@ -95,5 +67,22 @@ public class LongPressBackToKill implements IXposedHookLoadPackage {
 			} else XposedBridge.log("[harsh_debug] PhoneWindowManager instance null");
 		}
 	};
-
+	
+	public static void init(ClassLoader loader) {
+		Class<?> phwmPolicy = XposedHelpers.findClass("com.android.internal.policy.impl.PhoneWindowManager", loader);
+		XposedHelpers.findAndHookMethod(phwmPolicy, "interceptKeyBeforeQueueing", KeyEvent.class, int.class, boolean.class, new XC_MethodHook() {
+			@Override
+			protected void beforeHookedMethod(MethodHookParam param)
+					throws Throwable {
+				phwmInstance = param.thisObject;
+				Handler handler = (Handler) XposedHelpers.getObjectField(param.thisObject, "mHandler");
+				KeyEvent event = (KeyEvent)param.args[0];
+				int code = event.getKeyCode();
+				if(code == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
+					handler.postDelayed(runnable, ViewConfiguration.getLongPressTimeout());
+				else
+					handler.removeCallbacks(runnable);
+			}
+		});
+	}
 }
