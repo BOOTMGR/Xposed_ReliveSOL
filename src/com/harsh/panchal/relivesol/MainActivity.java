@@ -19,6 +19,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.view.Menu;
@@ -88,6 +89,19 @@ public class MainActivity extends Activity {
         public void onCreate(Bundle savedInstanceState) {
         	super.onCreate(savedInstanceState);
         	addPreferencesFromResource(R.xml.preference);
+        	Preference pref = findPreference("blur_radius");
+        	pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+				
+				@Override
+				public boolean onPreferenceChange(Preference preference, Object newValue) {
+					int val = Integer.parseInt((String) newValue);
+					if(val < 0 || val > 100) {
+						Toast.makeText(getActivity(), "Please enter value between 0 - 100", Toast.LENGTH_SHORT).show();
+						return false;
+					}
+					return true;
+				}
+			});
         }
         
         @Override
