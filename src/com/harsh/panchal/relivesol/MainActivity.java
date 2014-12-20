@@ -7,11 +7,6 @@
  ******************************************************************************/
 package com.harsh.panchal.relivesol;
 
-import java.io.DataOutputStream;
-
-import eu.chainfire.libsuperuser.Shell;
-import eu.chainfire.libsuperuser.Shell.SU;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
@@ -28,6 +23,8 @@ import android.preference.PreferenceScreen;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import eu.chainfire.libsuperuser.Shell;
+import eu.chainfire.libsuperuser.Shell.SU;
 
 public class MainActivity extends Activity {
 	
@@ -84,8 +81,8 @@ public class MainActivity extends Activity {
         public void onCreate(Bundle savedInstanceState) {
         	super.onCreate(savedInstanceState);
         	addPreferencesFromResource(R.xml.preference);
-        	Preference pref = findPreference("blur_radius");
-        	pref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+        	Preference blurPref = findPreference("blur_radius");
+        	blurPref.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 				
 				@Override
 				public boolean onPreferenceChange(Preference preference, Object newValue) {

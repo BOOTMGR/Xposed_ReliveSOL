@@ -91,6 +91,7 @@
                 android:title="@string/blur_radius"
                 android:summary="@string/blur_radius_sum"
                 android:dialogTitle="@string/blur_radius"
+                android:defaultValue="35"
                 android:inputType="number" />
 	    
     </PreferenceScreen>
