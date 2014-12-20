@@ -86,13 +86,10 @@
                 android:title="@string/blur_lockscreen"
                 android:summary="@string/blur_lockscreen_sum" />
 	    
-	    <EditTextPreference
-                android:key="blur_radius"
-                android:title="@string/blur_radius"
-                android:summary="@string/blur_radius_sum"
-                android:dialogTitle="@string/blur_radius"
-                android:defaultValue="35"
-                android:inputType="number" />
+	    <com.harsh.panchal.relivesol.BlurRadiusDialog
+	        	android:key="blur_radius"
+	        	android:title="@string/blur_radius"
+	        	android:summary="@string/blur_radius_sum" />
 	    
     </PreferenceScreen>
     
