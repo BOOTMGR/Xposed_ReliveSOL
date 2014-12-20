@@ -9,6 +9,9 @@ package com.harsh.panchal.relivesol;
 
 import java.io.DataOutputStream;
 
+import eu.chainfire.libsuperuser.Shell;
+import eu.chainfire.libsuperuser.Shell.SU;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
@@ -59,17 +62,9 @@ public class MainActivity extends Activity {
 						
 						@Override
 						public void onClick(DialogInterface arg0, int arg1) {
-							try {
-								// we can't live without su :P
-								Process process = Runtime.getRuntime().exec("su");
-						        DataOutputStream os = new DataOutputStream(process.getOutputStream());
-						        os.writeBytes("pkill -f system_server\n");
-						        os.flush();
-						        os.close();
-						        process.waitFor();
-							} catch (Exception e) {
-								Toast.makeText(mContext, "Hotboot unavailable, Please manually reboot device",  Toast.LENGTH_SHORT).show();
-							}
+							if(SU.available()) {
+								Shell.SU.run("pkill -f system_server");
+							} else Toast.makeText(mContext, "Please allow SU rights to hotboot device", Toast.LENGTH_SHORT).show();
 						}
 					});
 					builder.setNegativeButton("No", null);
