@@ -29,6 +29,28 @@
 	    
     </PreferenceScreen>
     
+	<PreferenceScreen 
+        		android:key="lockscreen_settings_screen"
+        		android:title="@string/lockscreen_settings"
+        		android:summary="@string/lockscreen_settings_sum">
+	    
+	    <CheckBoxPreference
+                android:key="rotate_lockscreen"
+                android:title="@string/rotate_lockscreen"
+                android:summary="@string/rotate_lockscreen_sum" />
+	    
+	    <CheckBoxPreference
+                android:key="blur_lockscreen"
+                android:title="@string/blur_lockscreen"
+                android:summary="@string/blur_lockscreen_sum" />
+	    
+	    <com.harsh.panchal.relivesol.BlurRadiusDialog
+	        	android:key="blur_radius"
+	        	android:title="@string/blur_radius"
+	        	android:summary="@string/blur_radius_sum" />
+	    
+    </PreferenceScreen>
+    
 	<PreferenceScreen
                 android:key="misc_preference_screen"
                 android:title="@string/misc_settings"
@@ -68,28 +90,6 @@
                 android:key="navigation_bar"
                 android:title="@string/navigation_bar"
                 android:summary="@string/navigation_bar_sum" />
-	    
-    </PreferenceScreen>
-    
-	<PreferenceScreen 
-        		android:key="lockscreen_settings_screen"
-        		android:title="@string/lockscreen_settings"
-        		android:summary="@string/lockscreen_settings_sum">
-	    
-	    <CheckBoxPreference
-                android:key="rotate_lockscreen"
-                android:title="@string/rotate_lockscreen"
-                android:summary="@string/rotate_lockscreen_sum" />
-	    
-	    <CheckBoxPreference
-                android:key="blur_lockscreen"
-                android:title="@string/blur_lockscreen"
-                android:summary="@string/blur_lockscreen_sum" />
-	    
-	    <com.harsh.panchal.relivesol.BlurRadiusDialog
-	        	android:key="blur_radius"
-	        	android:title="@string/blur_radius"
-	        	android:summary="@string/blur_radius_sum" />
 	    
     </PreferenceScreen>
     
