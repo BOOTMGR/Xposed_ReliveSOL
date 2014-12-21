@@ -4,9 +4,10 @@ import android.content.Context;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
 
-public class LgeLockScreenHook {
+public class LockScreenHook {
 	public static void init(ClassLoader classLoader) {
 		Class<?> LgeLockScreenPackageManager = XposedHelpers.findClass("com.android.internal.policy.impl.LgeLockScreenPackageManager", classLoader);
+		Class<?> lockScreen = XposedHelpers.findClass("com.android.internal.policy.impl.LockScreen", classLoader);
 		
 		XposedHelpers.findAndHookMethod(LgeLockScreenPackageManager, "loadLockScreenPackage", Context.class, new XC_MethodHook() {
 			@Override
@@ -22,6 +23,15 @@ public class LgeLockScreenHook {
 				XposedHelpers.setObjectField(param.thisObject, "mPackageName", null);
 				XposedHelpers.setObjectField(param.thisObject, "mPackageContext", null);
 				XposedHelpers.setObjectField(param.thisObject, "mLockScreenFactory", null);
+			}
+		});
+		
+		// Disable vibration in AOSP Lockscreen
+		XposedHelpers.findAndHookMethod(lockScreen, "shouldEnableMenuKey", new XC_MethodHook() {
+			@Override
+			protected void afterHookedMethod(MethodHookParam param)
+					throws Throwable {
+				param.setResult(false);
 			}
 		});
 	}
