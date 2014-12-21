@@ -29,13 +29,7 @@ public class LockScreenHook {
 		});
 		
 		// Disable menu key in AOSP Lockscreen
-		XposedHelpers.findAndHookMethod(lockScreen, "shouldEnableMenuKey", new XC_MethodHook() {
-			@Override
-			protected void afterHookedMethod(MethodHookParam param)
-					throws Throwable {
-				param.setResult(false);
-			}
-		});
+		XposedHelpers.findAndHookMethod(lockScreen, "shouldEnableMenuKey", XC_MethodReplacement.returnConstant(false));
 		
 		// Disable vibration in AOSP Lockscreen
 		XposedHelpers.findAndHookMethod(multiWaveViewWidget, "setVibrateEnabled", boolean.class, XC_MethodReplacement.DO_NOTHING);
