@@ -9,9 +9,18 @@ package com.harsh.panchal.relivesol;
 
 import android.annotation.SuppressLint;
 import android.content.res.XResources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.callbacks.XC_LayoutInflated;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 @SuppressLint("SdCardPath")
@@ -35,6 +44,44 @@ public class ReliveSOL implements IXposedHookZygoteInit, IXposedHookLoadPackage 
 		if(mPref.getBoolean("perf_mode", false)) {
 			XResources.setSystemWideReplacement("android", "bool", "config_sf_limitedAlpha", true);
 			XResources.setSystemWideReplacement("android", "bool", "config_sf_slowBlur", true);
+		}
+		if(mPref.getBoolean("aosp_lockscreen", false)) {
+			XResources.hookSystemWideLayout("android", "layout", "keyguard_screen_tab_unlock", new XC_LayoutInflated() {
+				
+				@Override
+				public void handleLayoutInflated(LayoutInflatedParam liparam)
+						throws Throwable {
+					// Fix for text in black color
+					TextView carrier = (TextView) liparam.view.findViewById(liparam.res.getIdentifier("carrier", "id", "android"));
+					TextView date = (TextView) liparam.view.findViewById(liparam.res.getIdentifier("date", "id", "android"));
+					TextView alarmStatus = (TextView) liparam.view.findViewById(liparam.res.getIdentifier("alarm_status", "id", "android"));
+					TextView chargerStatus = (TextView) liparam.view.findViewById(liparam.res.getIdentifier("status1", "id", "android"));
+					Button emrgButton = (Button) liparam.view.findViewById(liparam.res.getIdentifier("emergencyCallButton", "id", "android"));
+					carrier.setTextColor(Color.WHITE);
+					date.setTextColor(Color.WHITE);
+					alarmStatus.setTextColor(Color.WHITE);
+					chargerStatus.setTextColor(Color.WHITE);
+					
+					/**
+					 * Fix for grey bar at bottom
+					 * F*** there are two buttons with same ids. So use
+					 * them to grab parent and then get child view.
+					 */
+					GridLayout layout = (GridLayout) emrgButton.getParent();
+					layout.getChildAt(6).setVisibility(View.GONE);
+				}
+			});
+			
+			// Enhancements to lockscreen music controls
+			XResources.hookSystemWideLayout("android", "layout", "keyguard_transport_control", new XC_LayoutInflated() {
+				
+				@Override
+				public void handleLayoutInflated(LayoutInflatedParam liparam)
+						throws Throwable {
+					ImageView imageView = (ImageView) liparam.view.findViewById(liparam.res.getIdentifier("albumart", "id", "android"));
+					((FrameLayout) imageView.getParent()).setForeground(new ColorDrawable(0x5f000000));
+				}
+			});
 		}
 	}
 
