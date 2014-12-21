@@ -45,5 +45,7 @@
     <string name="blur_radius_sum">Radius for blurring image</string>
     <string name="info">Note</string>
     <string name="info_sum">Changes will take effect only after reboot</string>
+    <string name="aosp_lockscreen">AOSP Lockscreen</string>
+    <string name="aosp_lockscreen_sum">Use stock android lockscreen instead of LG Lockscreen</string>
 
 </resources>

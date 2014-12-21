@@ -80,6 +80,10 @@ public class MainActivity extends Activity {
         public void onCreate(Bundle savedInstanceState) {
         	super.onCreate(savedInstanceState);
         	addPreferencesFromResource(R.xml.preference);
+        	if(getPreferenceManager().getSharedPreferences().getBoolean("aosp_lockscreen", false)) {
+        		findPreference("blur_lockscreen").setEnabled(false);
+        		findPreference("blur_radius").setEnabled(false);
+        	}
         }
         
         @Override
@@ -91,6 +95,9 @@ public class MainActivity extends Activity {
 				builder.setMessage("Blur lockscreen involves CPU intensive tasks which may cause some delay while locking device.");
 				builder.setPositiveButton("OK", null);
 				builder.create().show();
+        	} else if (preference.getKey().equals("aosp_lockscreen")) {
+        		findPreference("blur_lockscreen").setEnabled(getPreferenceManager().getSharedPreferences().getBoolean("aosp_lockscreen", false) ? false : true);
+        		findPreference("blur_radius").setEnabled(getPreferenceManager().getSharedPreferences().getBoolean("aosp_lockscreen", false) ? false : true);
         	}
         	return super.onPreferenceTreeClick(preferenceScreen, preference);
         }

@@ -49,6 +49,8 @@ public class ReliveSOL implements IXposedHookZygoteInit, IXposedHookLoadPackage 
 				LongPressBackToKill.init(lpparam.classLoader);
 			if(mPref.getBoolean("vol_control_music", false))
 				VolumeKeySkipTrack.init(lpparam.classLoader);
+			if(mPref.getBoolean("aosp_lockscreen", false))
+				LgeLockScreenHook.init(lpparam.classLoader);
 		}
 	}
 }

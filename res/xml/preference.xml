@@ -40,6 +40,11 @@
                 android:summary="@string/rotate_lockscreen_sum" />
 	    
 	    <CheckBoxPreference
+                android:key="aosp_lockscreen"
+                android:title="@string/aosp_lockscreen"
+                android:summary="@string/aosp_lockscreen_sum" />
+	    
+	    <CheckBoxPreference
                 android:key="blur_lockscreen"
                 android:title="@string/blur_lockscreen"
                 android:summary="@string/blur_lockscreen_sum" />
